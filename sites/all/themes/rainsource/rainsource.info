@@ -22,4 +22,5 @@ regions[mainMenu] = Main menu
 regions[flower_text] = Flower Text area
 regions[footer_text] = Footer Text area
 regions[bonusArea] = Bonus Area
+regions[callBar] = bottom contact bar
 

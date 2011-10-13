@@ -76,11 +76,16 @@ jQuery(document).ready(function() {
 	
 	if (window.location.hash != ''){
 		console.log('winlochash -- force hashchange');
-		location.hash = '';
-		jQuery(window).hashchange();
+		//
+		activateText();
+		
+		//location.hash = '';
+		
+	} else {
+		activateWho ();
 	}
 	
-	activateWho ();
+	
 	
 });
 
@@ -90,8 +95,30 @@ function activateWho () {
 	jQuery('#whoAreWe #whoBody').show();	
 }
 
-function activateDetails() {
+function activateText() {
+	jQuery('#whoAreWe #whoBody').hide();
+	jQuery('#textPosition').fadeIn();
+	console.log("activate");
+	console.log("find " + location.hash);
+	//find correct element to activate
 	
+	if (jQuery('a.stub[href*="'+ location.hash +'"]').length >= 1) {
+		//STUB
+		jQuery('a.stub[href*="'+ location.hash +'"]').parent().parent().parent().children('a.branch').addClass("rollOver");
+		jQuery('a.stub[href*="'+ location.hash +'"]').parent().parent().parent().find('li.leaf a').fadeIn();
+		jQuery('a.stub[href*="'+ location.hash +'"]').parent().parent().parent().find('li.leaf span.clickLeaf').fadeIn();
+		jQuery('a.stub[href*="'+ location.hash +'"]').parent().children('span').addClass('active');
+		jQuery('a.stub[href*="'+ location.hash +'"]').parent().parent().parent().fadeIn();
+	} else {
+		//BRANCH
+		jQuery('a.branch[href*="'+ location.hash +'"]').addClass("rollOver");
+		jQuery('a.branch[href*="'+ location.hash +'"]').parent().children('ul').fadeIn();
+		jQuery('a.branch[href*="'+ location.hash +'"]').parent().children('ul').find('li.leaf a').fadeIn();
+		jQuery('a.branch[href*="'+ location.hash +'"]').parent().children('ul').find('li.leaf span.clickLeaf').fadeIn();
+	}
+	
+	
+	jQuery(window).hashchange();
 }
 
 function navByHash(hash){
@@ -99,10 +126,11 @@ function navByHash(hash){
 	var value = hash.replace("#node/", "");
 	console.log ("hash2: " + value);
 	loadStr = '/loadFlower/' + value;
-	//console.log ("loadstr: " + loadStr);
-	//console.log (loadStr);
-	//jQuery('#textPosition').load(loadStr + ' #textArea');
-	jQuery('#textPosition #textArea').load(loadStr);
+	//insert preloader here...
+	jQuery('#textPosition #textArea').html('<div class="sideBox ajaxloader"><img class="ajax_loader" src="/sites/all/themes/rainsource/img/ajax-loader.gif"/></div>');
+	
+	
+	//jQuery('#textPosition #textArea').load(loadStr);
 	
 }
 

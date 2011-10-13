@@ -15,16 +15,23 @@
             </div>
         </div>
         <div id="bonusArea">
-           	<?php print $messages; ?>
-			<?php print render($page['help']); ?>
+           	
+			
+			
+            <?php print render($page['bonusArea']); ?>
+		</div>
+        <div id="contentHidden">
+			<?php print $messages; ?><?php print render($page['help']); ?>
             <?php if ($action_links): ?>
             	<ul class="action-links">
             	  <?php print render($action_links); ?>
             	</ul>
             <?php endif; ?>
+        	<?php if ($tabs): ?><div class="tabs"><?php print render($tabs); ?></div><?php endif; ?>
 			
-            <?php print render($page['bonusArea']); ?> <?php print $feed_icons; ?> </div>
-		
+            <?php print render($page['content']); ?>
+             <?php print $feed_icons; ?> 
+        </div>
         <div id="flowerArea">
         	<?php print render($page['mainMenu']); ?>
         	
@@ -40,7 +47,9 @@
 			 <?php print render($page['flower_text']); ?>
             </div> 
 		</div>	
-		
+		<div id="tagFooter">
+        		<?php print render($page['footer_text']); ?> Website by <a href="http://fountain-city.com">FCP</a>.
+       	</div>
       </div> 
         
         
@@ -48,8 +57,9 @@
         
        
            
-        <div id="tagFooter">
-        		<?php print render($page['footer_text']); ?> Website by <a href="http://fountain-city.com">FCP</a>.
+        
+        <div id="callBar">
+        		<?php print render($page['callBar']); ?>
        	</div>
     
         
