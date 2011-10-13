@@ -1,0 +1,25 @@
+name = rainsource
+description = rain source theme
+core = 7.x
+engine = phptemplate
+
+
+stylesheets[all][] = css/core.less
+stylesheets[screen][] = css/admin.css
+
+regions[content] = Content
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[indicators] = Indicators
+regions_hidden[] = indicators
+
+regions[logoClickArea] = logo Click Area
+regions[siteSlogan] = site slogan
+regions[whoAreWe] = who we are button
+regions[whoAreWeDetails] = who we are details
+regions[mainMenu] = Main menu
+regions[flower_text] = Flower Text area
+regions[footer_text] = Footer Text area
+regions[bonusArea] = Bonus Area
+

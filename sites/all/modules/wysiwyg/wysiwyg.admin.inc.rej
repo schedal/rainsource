@@ -1,0 +1,84 @@
+***************
+*** 316,322 ****
+    unset($values['submit'], $values['form_id'], $values['op'], $values['form_token'], $values['form_build_id']);
+  
+    // Insert new profile data.
+-   db_query("UPDATE {wysiwyg} SET settings = '%s' WHERE format = %d", serialize($values), $format);
+  
+    drupal_set_message(t('Wysiwyg profile for %format has been saved.', array('%format' => $input_format)));
+  
+--- 316,333 ----
+    unset($values['submit'], $values['form_id'], $values['op'], $values['form_token'], $values['form_build_id']);
+  
+    // Insert new profile data.
++   // Determine if this is an update.
++   if (!db_result(db_query("SELECT 1 FROM {wysiwyg} WHERE format = %d", $format))) {
++     $update = array();
++   }
++   else {
++     $update = array('format');
++   }
++   $wysiwyg = new stdClass();
++   $wysiwyg->format = $format;
++   $wysiwyg->editor = $editor;
++   $wysiwyg->settings = serialize($values);
++   drupal_write_record('wysiwyg', $wysiwyg, $update);
+  
+    drupal_set_message(t('Wysiwyg profile for %format has been saved.', array('%format' => $input_format)));
+  
+***************
+*** 470,481 ****
+        $enable_save = TRUE;
+      }
+      if (isset($profiles[$id]) && !empty($profiles[$id]->editor)) {
+-       $form['formats'][$id]['edit'] = array(
+-         '#value' => l(t('Edit'), "admin/settings/wysiwyg/profile/$id/edit"),
+-       );
+-       $form['formats'][$id]['delete'] = array(
+-         '#value' => l(t('Delete'), "admin/settings/wysiwyg/profile/$id/delete"),
+-       );
+      }
+    }
+  
+--- 483,513 ----
+        $enable_save = TRUE;
+      }
+      if (isset($profiles[$id]) && !empty($profiles[$id]->editor)) {
++       if (isset($profiles[$id]->default)) {
++         $form['formats'][$id]['edit'] = array(
++           '#value' => l(t('Override'), "admin/settings/wysiwyg/profile/$id/edit"),
++         );
++       }
++       else {
++         $form['formats'][$id]['edit'] = array(
++           '#value' => l(t('Edit'), "admin/settings/wysiwyg/profile/$id/edit"),
++         );
++       }
++       if ($ctools_installed) {
++         $form['formats'][$id]['export'] = array(
++           '#value' => l(t('Export'), "admin/settings/wysiwyg/profile/$id/export"),
++         );
++       }
++       if (isset($profiles[$id]->default)) {
++         $form['formats'][$id]['delete'] = array(
++           '#value' => l(t('Revert'), "admin/settings/wysiwyg/profile/$id/revert"),
++         );
++       }
++       else {
++         $form['formats'][$id]['delete'] = array(
++           '#value' => l(t('Delete'), "admin/settings/wysiwyg/profile/$id/delete"),
++         );
++       }
+      }
+    }
+  
+***************
+*** 561,564 ****
+  function wysiwyg_profile_delete($format) {
+    db_query("DELETE FROM {wysiwyg} WHERE format = %d", $format);
+  }
+- 
+--- 727,729 ----
+  function wysiwyg_profile_delete($format) {
+    db_query("DELETE FROM {wysiwyg} WHERE format = %d", $format);
+  }

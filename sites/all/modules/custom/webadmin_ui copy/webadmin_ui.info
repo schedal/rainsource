@@ -1,0 +1,5 @@
+name = Web Admin UI
+description = Removes form elements for non-super admins to make the admin experience simpler. 
+core = 7.x
+project = FCP Custom
+

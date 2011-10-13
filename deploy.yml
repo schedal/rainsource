@@ -1,0 +1,6 @@
+'settings':
+  ignore_if_same_revision: true
+  debug_mode: true
+
+'ftp://rainet:3849596DADDAdsfu23!@rainsource.net:21/public_html/test-deploy':
+  skip: false

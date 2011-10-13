@@ -1,0 +1,52 @@
+<?php
+
+/*
+ * implements hook_form_alter ()
+ */
+function webadmin_ui_form_alter(&$form, &$form_state, $form_id) {
+	//dpm ($form_id);
+}
+
+/*
+ * implements hook_form_alter ()
+ */
+function webadmin_ui_form_page_node_form_alter(&$form, &$form_state, $form_id) {
+	//Global USER;
+	global $user;   
+	dpm ($form);
+	//dpm ($user);
+	
+	if ($user->uid != 1) {
+		
+		$form['revision_information']['#access'] = false;
+		$form['author']['#access'] = false;
+		$form['menu']['#access'] = false;
+	}
+	//dpm ($form['revision_information']['#access']);
+}
+
+/*
+ * implements hook_form_alter ()
+ */
+function webadmin_ui_form_block_admin_configure_alter(&$form, &$form_state, $form_id) {
+	//dpm ($form);
+	global $user; 
+	
+	if ($user->uid != 1) {
+		
+		$form['regions']['#access'] = false;
+		$form['visibility']['#access'] = false;
+		$form['settings']['title']['#access']  = false;
+		//$form['author']['#access'] = false;
+		//$form['menu']['#access'] = false;
+	}
+}
+
+/*
+ * implements hook_form_alter ()
+ */
+function webadmin_ui_form_menu_overview_form_alter(&$form, &$form_state, $form_id) {
+	//dpm ($form);
+}
+
+

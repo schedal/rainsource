@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+/* system overrides:
+*/
+
+body.page-admin .context-plugins #edit-conditions-plugins-menu-values {
+	resize:both;
+	width: 400px;
+}

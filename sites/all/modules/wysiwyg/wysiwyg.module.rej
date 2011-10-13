@@ -1,0 +1,155 @@
+***************
+*** 621,632 ****
+  function wysiwyg_profile_load($format) {
+    static $profiles;
+  
+    if (!isset($profiles) || !array_key_exists($format, $profiles)) {
+-     $result = db_query('SELECT format, editor, settings FROM {wysiwyg} WHERE format = %d', $format);
+-     while ($profile = db_fetch_object($result)) {
+-       $profile->settings = unserialize($profile->settings);
+-       $profiles[$profile->format] = $profile;
+-     }
+    }
+  
+    return (isset($profiles[$format]) ? $profiles[$format] : FALSE);
+--- 662,670 ----
+  function wysiwyg_profile_load($format) {
+    static $profiles;
+  
++   // If the profile is marked as default, check if it has overrides from the database
+    if (!isset($profiles) || !array_key_exists($format, $profiles)) {
++     $profiles = wysiwyg_profile_load_all();
+    }
+  
+    return (isset($profiles[$format]) ? $profiles[$format] : FALSE);
+***************
+*** 635,650 ****
+  /**
+   * Load all profiles.
+   */
+- function wysiwyg_profile_load_all() {
+    static $profiles;
+  
+-   if (!isset($profiles)) {
+      $profiles = array();
+      $result = db_query('SELECT format, editor, settings FROM {wysiwyg}');
+      while ($profile = db_fetch_object($result)) {
+        $profile->settings = unserialize($profile->settings);
+        $profiles[$profile->format] = $profile;
+      }
+    }
+  
+    return $profiles;
+--- 673,704 ----
+  /**
+   * Load all profiles.
+   */
++ function wysiwyg_profile_load_all($reset = FALSE) {
+    static $profiles;
+  
++   if ($reset || !isset($profiles)) {
+      $profiles = array();
++     if (!$reset && ($cache = cache_get('wysiwyg:profiles', 'cache')) && is_array($cache->data)) {
++       $profiles = $cache->data;
++       return $profiles;
++     }
++ 
++     // Load first wysiwyg settings from code, calling to hook_wysiwyg_defaults
++     $default_profiles = module_invoke_all('wysiwyg_defaults');
++     foreach ($default_profiles as $default_profile) {
++       $default_profile->default = TRUE;
++       $profiles[$default_profile->format] = $default_profile;
++     }
++ 
++     // Now, load settings from the database.
++     // They will override settings from code, if any
+      $result = db_query('SELECT format, editor, settings FROM {wysiwyg}');
+      while ($profile = db_fetch_object($result)) {
+        $profile->settings = unserialize($profile->settings);
+        $profiles[$profile->format] = $profile;
+      }
++     drupal_alter('wysiwyg_load_profiles', $profiles);
++     cache_set('wysiwyg:profiles', $profiles);
+    }
+  
+    return $profiles;
+***************
+*** 1007,1009 ****
+   * @} End of "defgroup wysiwyg_api".
+   */
+  
+--- 1061,1134 ----
+   * @} End of "defgroup wysiwyg_api".
+   */
+  
++ /**
++  * @defgroup wysiwyg_export_import Wysiwyg Export Import
++  *
++  * @{
++  */
++ 
++ /**
++  * Export a format setting and display it in a form.
++  */
++ function wysiwyg_export_profile_page(&$form_state, $format) {
++   if (module_exists('ctools')) {
++     $obj = wysiwyg_profile_load($format);
++ 
++     $formats = filter_formats();
++     $format_name = $formats[$format]->name;
++ 
++     drupal_set_title(t('Export @wysiwyg settings for: @format input format', array('@wysiwyg'=> $obj->editor, '@format' => $format_name)));
++     $code = wysiwyg_export_profile($obj);
++ 
++     $form['export'] = array(
++       '#title' => t('Export data'),
++       '#type' => 'textarea',
++       '#value' => $code,
++       '#rows' => 15,
++       '#description' => t('Copy the export text and paste it into another wysiwyg format using the import function.'),
++     );
++     return $form;
++   }
++   else {
++     form_set_error('', t('You need to install the !ctools module to be able to export and import wysiwyg profiles.', array('!ctools' => l('Ctools', 'http://drupal.org/project/ctools'))));
++     return array();
++   }
++ }
++ 
++ /**
++  * Export wysiwyg settings.
++  */
++ function wysiwyg_export_profile($obj, $indent = '') {
++   ctools_include('export');
++   if (is_string($obj->settings)) {
++     $obj->settings = unserialize($obj->settings);
++   }
++   else {
++     $obj->settings = $obj->settings;
++   }
++   $additions = array();
++   drupal_alter('wysiwyg_export_profile', $additions, $obj);
++   return ctools_export_object('wysiwyg', $obj, $indent, NULL, array(), $additions);
++ }
++ 
++ /**
++  * Implementation of hook_features_api().
++  */
++ function wysiwyg_features_api() {
++   if (!module_exists('ctools')) {
++     return array();
++   }
++   return array(
++     'wysiwyg' => array(
++       'name' => t('Wysiwyg Profiles'),
++       'default_hook' => 'wysiwyg_defaults',
++       'default_file' => FEATURES_DEFAULTS_INCLUDED,
++       'features_source' => TRUE,
++       'file' => drupal_get_path('module', 'wysiwyg') .'/wysiwyg.features.inc',
++     ),
++   );
++ }
++ 
++ /**
++  * @} End of "defgroup wysiwyg_export_import".
++  */

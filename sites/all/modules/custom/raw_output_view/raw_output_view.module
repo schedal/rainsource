@@ -1,0 +1,22 @@
+<?php
+/*
+ * implements hook_menu
+ */
+ 
+function raw_output_view_menu () {
+	$items['loadFlower/%'] = array(
+		'title' => 'Call Flower',
+		'description' => 'Flower loaded with raw data',
+		'page callback' => 'raw_output_view_load_view',
+		'page arguments' => array(1),
+		'access arguments' => array('access content')
+  );
+	
+	return $items;
+}
+
+function raw_output_view_load_view ($vars) {
+	print views_embed_view('flower_data', 'default', $vars);
+	exit;
+}
+

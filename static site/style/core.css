@@ -1,0 +1,786 @@
+div#textPosition {
+	position: relative;
+	display: none;
+}
+
+div#textArea {
+	display: block;
+	position: absolute;
+	right: 14px;
+	top: -613px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-family: Arial,Helvetica,sans-serif;
+	size: 12px;
+	height: 100%;
+	color: #666666;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	background-color: #FFFFFF;
+}
+
+body {
+	background-repeat: no-repeat;
+	font-family: Arial,Helvetica,sans-serif;
+	margin: 0;
+	padding: 0;
+	size: 12px;
+	width: 100%;
+	height: 100%;
+}
+
+#totalContainer {
+	position: relative;
+	top: 0;
+}
+
+div#whoAreWe {
+	position: absolute;
+}
+
+.main {
+	background-image: url("../img/rainsource_bg.jpg");
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0;
+	min-height: 100%;
+	padding-top: 0;
+	text-align: left;
+	width: 987px;
+	overflow: hidden;
+}
+
+a {
+	color: #12A1E3;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #47BAEF;
+	text-decoration: none;
+}
+
+#logoArea a {
+	background-image: url("../img/logo.png");
+	display: block;
+	height: 94px;
+	left: 24px;
+	position: relative;
+	text-indent: -99999px;
+	top: 10px;
+	width: 239px;
+}
+
+#sloganArea {
+	color: #9E9085;
+	display: block;
+	font-size: 12px;
+	font-style: italic;
+	text-align: left;
+	width: 400px;
+	height: 24px;
+	position: relative;
+	left: 180px;
+	top: -86px;
+}
+
+#whoAreWe #whoHeader a {
+	background-image: url("../img/whoarewe.png");
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: block;
+	position: relative;
+	text-indent: -99999px;
+	width: 228px;
+	height: 43px;
+	left: 766px;
+	top: -100px;
+	z-index: 200;
+}
+
+#whoAreWe #whoHeader a:hover {
+	background-position: 0 -47px;
+}
+
+#whoAreWe #whoHeader a.active {
+	background-position: 0 -91px;
+	top: -107px;
+	height: 48px;
+}
+
+#whoBody {
+	display: none;
+	position: absolute;
+	right: -750px;
+	top: -72px;
+}
+
+#flowerArea {
+	height: 600px;
+	margin-top: 37px;
+	margin-left: -43px;
+}
+
+#flowerArea ul {
+	position: relative;
+	left: 147px;
+}
+
+#flowerArea li {
+	list-style: none outside none;
+}
+
+#flowerArea a.leaf {
+	position: absolute;
+	display: none;
+}
+
+#flowerArea .clickLeaf {
+	position: absolute;
+	display: none;
+}
+
+#flowerArea a.branch {
+	position: absolute;
+	display: block;
+}
+
+#flowerArea ul ul {
+	position: relative;
+	height: 0;
+}
+
+#menu01 a.branch {
+	background-image: url("../img/flower/bigpetals.png");
+	background-repeat: no-repeat;
+	display: block;
+	height: 151px;
+	text-indent: -9999px;
+	width: 151px;
+	z-index: 10000;
+	background-position: -317px -3px;
+	left: 1px;
+	top: 5px;
+}
+
+#menu01 a.branch.rollOver {
+	background-position: -325px -312px;
+}
+
+#menu01 a.branch:hover {
+	background-position: -320px -155px;
+}
+
+#menu01 a.branch.rollOver:hover {
+	background-position: -327px -466px;
+}
+
+#menu02 a.branch {
+	background-image: url("../img/flower/bigpetals.png");
+	background-position: -4px -305px;
+	background-repeat: no-repeat;
+	display: block;
+	height: 151px;
+	left: 247px;
+	text-indent: -9999px;
+	top: 2px;
+	width: 151px;
+	z-index: 10001;
+}
+
+#menu02 a.branch.rollOver {
+	background-position: -673px -8px;
+}
+
+#menu02 a.branch:hover {
+	background-position: -7px -457px;
+}
+
+#menu02 a.branch.rollOver:hover {
+	background-position: -673px -161px;
+}
+
+#menu03 a.branch {
+	background-image: url("../img/flower/bigpetals.png");
+	background-repeat: no-repeat;
+	display: block;
+	height: 151px;
+	left: 251px;
+	text-indent: -9999px;
+	top: 253px;
+	width: 151px;
+	z-index: 10002;
+	background-position: -172px -459px;
+}
+
+#menu03 a.branch.rollOver {
+	background-position: -513px -315px;
+}
+
+#menu03 a.branch:hover {
+	background-position: -172px -307px;
+}
+
+#menu03 a.branch.rollOver:hover {
+	background-position: -513px -468px;
+}
+
+#menu04 a.branch {
+	background-image: url("../img/flower/bigpetals.png");
+	background-repeat: no-repeat;
+	display: block;
+	height: 152px;
+	left: 1px;
+	text-indent: -9999px;
+	top: 254px;
+	z-index: 10003;
+	background-position: 0 -156px;
+	width: 153px;
+}
+
+#menu04 a.branch.rollOver {
+	background-position: -672px -318px;
+}
+
+#menu04 a.branch:hover {
+	background-position: 0 -5px;
+}
+
+#menu04 a.branch.rollOver:hover {
+	background-position: -672px -470px;
+}
+
+#menu05 a.branch {
+	background-image: url("../img/flower/bigpetals.png");
+	background-position: -152px -1px;
+	background-repeat: no-repeat;
+	display: block;
+	height: 151px;
+	left: 123px;
+	text-indent: -9999px;
+	top: 128px;
+	z-index: 10005;
+	width: 156px;
+}
+
+#menu05 a.branch.rollOver {
+	background-position: -500px -6px;
+}
+
+#menu05 a.branch:hover {
+	background-position: -155px -152px;
+}
+
+#menu05 a.branch.rollOver:hover {
+	background-position: -500px -160px;
+}
+
+#menu11 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	left: -192px;
+	top: -35px;
+	height: 68px;
+	width: 67px;
+}
+
+#menu11 span {
+	background-image: url("../img/flower/all_petals_sprite.png");
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	text-indent: -9999px;
+	top: -49px;
+	width: 127px;
+	z-index: 100;
+	left: -218px;
+}
+
+#menu11 span.glow {
+	background-position: -1px -249px;
+}
+
+#menu11 span.active {
+	background-position: -1px -123px;
+}
+
+#menu12 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	left: -216px;
+	top: 43px;
+	height: 66px;
+	width: 72px;
+}
+
+#menu12 span {
+	background-image: url("../img/flower/all_petals_sprite.png");
+	background-position: -514px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: -222px;
+	text-indent: -9999px;
+	top: 15px;
+	width: 127px;
+	z-index: 100;
+}
+
+#menu12 span.glow {
+	background-position: -515px -249px;
+}
+
+#menu12 span.active {
+	background-position: -515px -123px;
+}
+
+#menu13 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	top: 118px;
+	left: -183px;
+	width: 59px;
+	height: 59px;
+}
+
+#menu13 span {
+	background-image: url("../img/flower/all_petals_sprite.png");
+	background-position: -939px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: -194px;
+	text-indent: -9999px;
+	top: 78px;
+	width: 94px;
+	z-index: 100;
+}
+
+#menu13 span.glow {
+	background-position: -939px -249px;
+}
+
+#menu13 span.active {
+	background-position: -939px -123px;
+}
+
+#menu21 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	top: 40px;
+	height: 68px;
+	width: 65px;
+	left: 251px;
+}
+
+#menu21 span {
+	background-image: url("../img/flower/all_petals_sprite.png");
+	background-position: -235px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 219px;
+	text-indent: -9999px;
+	top: 13px;
+	width: 114px;
+	z-index: 100;
+}
+
+#menu21 span.glow {
+	background-position: -237px -249px;
+}
+
+#menu21 span.active {
+	background-position: -237px -123px;
+}
+
+#menu22 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	top: 116px;
+	left: 232px;
+	height: 64px;
+	width: 58px;
+}
+
+#menu22 span {
+	background-image: url("../img/flower/all_petals_sprite.png");
+	background-position: -744px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 206px;
+	text-indent: -9999px;
+	top: 83px;
+	width: 101px;
+	z-index: 100;
+}
+
+#menu22 span.glow {
+	background-position: -744px -249px;
+}
+
+#menu22 span.active {
+	background-position: -744px -123px;
+}
+
+#menu23 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	width: 71px;
+	left: 226px;
+	height: 62px;
+	top: -34px;
+}
+
+#menu23 span {
+	background-position: -644px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 206px;
+	text-indent: -9999px;
+	top: -50px;
+	width: 101px;
+	z-index: 100;
+	background-image: url("../img/flower/all_petals_sprite.png");
+}
+
+#menu23 span.glow {
+	background-position: -644px -249px;
+}
+
+#menu23 span.active {
+	background-position: -644px -123px;
+}
+
+#menu31 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	top: 219px;
+	width: 68px;
+	left: 227px;
+	height: 64px;
+}
+
+#menu31 span {
+	background-image: url("../img/flower/all_petals_sprite.png");
+	background-position: -644px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 206px;
+	text-indent: -9999px;
+	top: 203px;
+	width: 101px;
+	z-index: 100;
+}
+
+#menu31 span.glow {
+	background-position: -644px -249px;
+}
+
+#menu31 span.active {
+	background-position: -644px -123px;
+}
+
+#menu32 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	left: 254px;
+	top: 297px;
+	height: 64px;
+	width: 61px;
+}
+
+#menu32 span {
+	background-position: -376px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 223px;
+	text-indent: -9999px;
+	top: 267px;
+	width: 101px;
+	z-index: 100;
+	background-image: url("../img/flower/all_petals_sprite.png");
+}
+
+#menu32 span.glow {
+	background-position: -377px -249px;
+}
+
+#menu32 span.active {
+	background-position: -377px -123px;
+}
+
+#menu33 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	left: 230px;
+	top: 373px;
+	height: 61px;
+	width: 59px;
+}
+
+#menu33 span {
+	background-position: -744px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 206px;
+	text-indent: -9999px;
+	top: 337px;
+	width: 101px;
+	z-index: 100;
+	background-image: url("../img/flower/all_petals_sprite.png");
+}
+
+#menu33 span.glow {
+	background-position: -744px -249px;
+}
+
+#menu33 span.active {
+	background-position: -744px -123px;
+}
+
+#menu41 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	height: 66px;
+	top: 376px;
+	width: 70px;
+	left: -189px;
+}
+
+#menu41 span {
+	background-position: -939px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: -194px;
+	text-indent: -9999px;
+	top: 330px;
+	width: 94px;
+	z-index: 100;
+	background-image: url("../img/flower/all_petals_sprite.png");
+}
+
+#menu41 span.glow {
+	background-position: -939px -249px;
+}
+
+#menu41 span.active {
+	background-position: -939px -123px;
+}
+
+#menu42 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	top: 297px;
+	left: -210px;
+	width: 66px;
+	height: 65px;
+}
+
+#menu42 span {
+	background-position: -514px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: -222px;
+	text-indent: -9999px;
+	top: 268px;
+	width: 127px;
+	z-index: 100;
+	background-image: url("../img/flower/all_petals_sprite.png");
+}
+
+#menu42 span.glow {
+	background-position: -515px -249px;
+}
+
+#menu42 span.active {
+	background-position: -515px -123px;
+}
+
+#menu52 a {
+	display: block;
+	left: 15px;
+	text-indent: -9999px;
+	top: 55px;
+	width: 77px;
+	z-index: 20000;
+	height: 72px;
+}
+
+#menu52 span {
+	background-image: url("../img/flower/all_petals_sprite.png");
+	background-position: -133px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 15px;
+	text-indent: -9999px;
+	top: 55px;
+	z-index: 100;
+	width: 79px;
+}
+
+#menu52 span.glow {
+	background-position: -133px -249px;
+}
+
+#menu52 span.active {
+	background-position: -133px -123px;
+}
+
+#menu51 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	left: 130px;
+	top: 175px;
+	height: 65px;
+	width: 62px;
+}
+
+#menu51 span {
+	background-position: -237px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 99px;
+	text-indent: -9999px;
+	top: 145px;
+	width: 107px;
+	z-index: 100;
+	background-image: url("../img/flower/all_petals_sprite.png");
+}
+
+#menu51 span.glow {
+	background-position: -239px -249px;
+}
+
+#menu51 span.active {
+	background-position: -239px -123px;
+}
+
+#menu53 a {
+	display: block;
+	text-indent: -9999px;
+	width: 77px;
+	z-index: 20000;
+	top: 279px;
+	left: 16px;
+	height: 63px;
+}
+
+#menu53 span {
+	background-position: -852px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	left: 13px;
+	text-indent: -9999px;
+	top: 236px;
+	z-index: 100;
+	background-image: url("../img/flower/all_petals_sprite.png");
+	width: 83px;
+}
+
+#menu53 span.glow {
+	background-position: -852px -249px;
+}
+
+#menu53 span.active {
+	background-position: -852px -123px;
+}
+
+#menu54 a {
+	display: block;
+	text-indent: -9999px;
+	z-index: 20000;
+	top: 175px;
+	height: 64px;
+	left: -87px;
+	width: 66px;
+}
+
+#menu54 span {
+	background-position: -1050px 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 125px;
+	text-indent: -9999px;
+	width: 107px;
+	z-index: 100;
+	left: -94px;
+	top: 147px;
+	background-image: url("../img/flower/all_petals_sprite.png");
+}
+
+#menu54 span.glow {
+	background-position: -1050px -249px;
+}
+
+#menu54 span.active {
+	background-position: -1050px -123px;
+}
+
+h2 {
+	font-size: 18px;
+	line-height: 18px;
+	padding: 0;
+	text-transform: uppercase;
+	color: #EEB60D;
+	margin: 0 0 7px;
+}
+
+.sideBox {
+	margin: 0;
+	height: auto;
+	width: 300px;
+	font-size: 13px;
+	line-height: 18px;
+	color: #726860;
+	padding: 15px;
+	-moz-border-image: url("../img/info_border.png") 13 13 13 13 repeat;
+	border-width: 13px;
+}
+
+.bumpOut {
+	display: block;
+	background: url("../img/info_arrow.png") no-repeat scroll 0 0 transparent;
+	margin: 0;
+	padding: 0;
+	z-index: 10000;
+	clear: both;
+	height: 23px;
+	width: 17px;
+	position: absolute;
+	top: 19px;
+	left: -9px;
+}
+

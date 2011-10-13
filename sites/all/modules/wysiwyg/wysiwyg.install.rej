@@ -1,0 +1,28 @@
+***************
+*** 7,12 ****
+  function wysiwyg_schema() {
+    $schema['wysiwyg'] = array(
+      'description' => t('Stores Wysiwyg profiles.'),
+      'fields' => array(
+        'format' => array('type' => 'int', 'not null' => TRUE, 'default' => 0),
+        'editor' => array('type' => 'varchar', 'length' => 128, 'not null' => TRUE, 'default' => ''),
+--- 7,25 ----
+  function wysiwyg_schema() {
+    $schema['wysiwyg'] = array(
+      'description' => t('Stores Wysiwyg profiles.'),
++     'export' =>  array(
++       'key' => 'format',
++       'identifier' => 'wysiwyg',
++       'default hook' => 'wysiwyg_defaults',  // Function hook name.
++       'export callback' => 'wysiwyg_export_profile',
++       'export module' => 'wysiwyg',
++       'api' => array(
++         'owner' => 'wysiwyg',
++         'api' => 'wysiwyg_defaults', // Base name for api include files.
++         'minimum_version' => 2,
++         'current_version' => 2,
++       ),
++     ),
+      'fields' => array(
+        'format' => array('type' => 'int', 'not null' => TRUE, 'default' => 0),
+        'editor' => array('type' => 'varchar', 'length' => 128, 'not null' => TRUE, 'default' => ''),

@@ -1,0 +1,156 @@
+diff --git a/README.txt b/README.txt
+index 75d2b14..2d1e6e2 100644
+--- a/README.txt
++++ b/README.txt
+@@ -39,6 +39,12 @@ To submit bug reports and feature suggestions, or to track changes:
+ * Setup editor profiles in Administration » Configuration » Content authoring
+   » Wysiwyg.
+ 
++-- EXPORT --
++
++You can export Wysiwyg profiles to code using the Features module, if you have also enabled the Entity module.
++
++  http://drupal.org/project/features
++  http://drupal.org/project/entity
+ 
+ -- CONTACT --
+ 
+@@ -51,4 +57,3 @@ This project has been sponsored by:
+   Specialized in consulting and planning of Drupal powered sites, UNLEASHED
+   MIND offers installation, development, theming, customization, and hosting
+   to get you started. Visit http://www.unleashedmind.com for more information.
+-
+diff --git a/wysiwyg.admin.inc b/wysiwyg.admin.inc
+index 05d47be..9676c7d 100644
+--- a/wysiwyg.admin.inc
++++ b/wysiwyg.admin.inc
+@@ -549,7 +549,6 @@ function wysiwyg_profile_delete_confirm($form, &$form_state, $profile) {
+ function wysiwyg_profile_delete_confirm_submit($form, &$form_state) {
+   $format = $form_state['values']['format'];
+   wysiwyg_profile_delete($format->format);
+-  wysiwyg_profile_cache_clear();
+ 
+   drupal_set_message(t('Wysiwyg profile for %name has been deleted.', array('%name' => $format->name)));
+   $form_state['redirect'] = 'admin/config/content/wysiwyg';
+diff --git a/wysiwyg.install b/wysiwyg.install
+index 038ba46..426c4c5 100644
+--- a/wysiwyg.install
++++ b/wysiwyg.install
+@@ -30,6 +30,22 @@ function wysiwyg_schema() {
+         'description' => 'Configuration settings for the editor.',
+         'type' => 'text',
+         'size' => 'normal',
++        'serialize' => TRUE,
++      ),
++      'status' => array(
++        'type' => 'int',
++        'not null' => TRUE,
++        // Hard code the value of ENTITY_CUSTOM in case entity.module is not present.
++        'default' => 0x01,
++        'size' => 'tiny',
++        'description' => 'The exportable status of the entity.',
++      ),
++      'module' => array(
++        'description' => 'The name of the providing module if the entity has been defined in code.',
++        'type' => 'varchar',
++        'length' => 255,
++        'default' => '',
++        'not null' => FALSE,
+       ),
+     ),
+     'primary key' => array('format'),
+@@ -310,3 +326,26 @@ function wysiwyg_update_7200() {
+     ));
+   }
+ }
++
++/**
++ * Add fields used for Entity API module exportables.
++ */
++function wysiwyg_update_7201() {
++  // Create a created column.
++  db_add_field('wysiwyg', 'status', array(
++    'type' => 'int',
++    'not null' => TRUE,
++    // Hard code the value of ENTITY_CUSTOM in case entity.module is not present.
++    'default' => 0x01,
++    'size' => 'tiny',
++    'description' => 'The exportable status of the entity.',
++  ));
++
++  db_add_field('wysiwyg', 'module', array(
++    'description' => 'The name of the providing module if the entity has been defined in code.',
++    'type' => 'varchar',
++    'length' => 255,
++    'default' => '',
++    'not null' => FALSE,
++  ));
++}
+diff --git a/wysiwyg.module b/wysiwyg.module
+index 31f3228..000cab5 100644
+--- a/wysiwyg.module
++++ b/wysiwyg.module
+@@ -12,14 +12,19 @@ function wysiwyg_entity_info() {
+   $types['wysiwyg_profile'] = array(
+     'label' => t('Wysiwyg profile'),
+     'base table' => 'wysiwyg',
+-    'controller class' => 'WysiwygProfileController',
++    'controller class' => module_exists('entity') ? 'EntityAPIControllerExportable' : 'WysiwygProfileController',
+     'fieldable' => FALSE,
+     // When loading all entities, DrupalDefaultEntityController::load() ignores
+     // its static cache. Therefore, wysiwyg_profile_load_all() implements a
+     // custom static cache.
+     'static cache' => FALSE,
++    // Make exportable if the Entity API module is enabled.
++    'exportable' => TRUE,
++    'module' => 'wysiwyg',
+     'entity keys' => array(
+       'id' => 'format',
++      // Provides the label in e.g. features export.
++      'label' => 'format',
+     ),
+   );
+   return $types;
+@@ -140,6 +145,23 @@ function wysiwyg_element_info_alter(&$types) {
+ }
+ 
+ /**
++ * Implements hook_modules_disabled().
++ */
++function wysiwyg_modules_disabled($modules) {
++  if (in_array('entity', $modules)) {
++    // Since Entity API module is an optional dependency, if it is disabled,
++    // the columns it was managing must be reset to their defaults.
++    $schema = drupal_get_schema('wysiwyg');
++    db_update('wysiwyg')
++      ->fields(array(
++        'status' => $schema['fields']['status']['default'],
++        'module' => $schema['fields']['module']['default'],
++      ))->execute();
++    wysiwyg_profile_cache_clear();
++  }
++}
++
++/**
+  * Process a text format widget to load and attach editors.
+  *
+  * The element's #id is used as reference to attach client-side editors.
+@@ -666,9 +688,15 @@ function wysiwyg_profile_load_all() {
+  * Deletes a profile from the database.
+  */
+ function wysiwyg_profile_delete($format) {
+-  db_delete('wysiwyg')
+-    ->condition('format', $format)
+-    ->execute();
++  if (module_exists('entity')) {
++    entity_delete('wysiwyg_profile', $format);
++  }
++  else {
++    db_delete('wysiwyg')
++      ->condition('format', $format)
++      ->execute();
++  }
++  wysiwyg_profile_cache_clear();
+ }
+ 
+ /**

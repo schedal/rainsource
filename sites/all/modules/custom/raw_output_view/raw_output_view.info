@@ -1,0 +1,5 @@
+name = Raw Output View
+description = Allows you to show a View with only HTML and no wrapping of any kind. 
+core = 7.x
+project = FCP Custom
+
